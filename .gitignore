@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# Dependensi & artefak build
+# ---------------------------------------------------------------------------
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+
+# ---------------------------------------------------------------------------
+# Environment & kredensial
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+/auth.json
+/storage/*.key
+
+# ---------------------------------------------------------------------------
+# Database lokal
+# ---------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.sqlite-*
+/mysql-data
+/database/*.sql
+
+# ---------------------------------------------------------------------------
+# Cache, log & file sementara Laravel
+# ---------------------------------------------------------------------------
+*.log
+/.phpunit.cache
+/.phpunit.result.cache
+/phpunit.xml.bak
+/storage/pail
+/storage/debugbar
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!storage/framework/.gitignore
+!storage/logs/.gitignore
+/bootstrap/cache/*.php
+/storage/*.tmp
+/storage/*.txt
+/storage/*.json
+
+# Berkas kerja pengujian & debug lokal
+/*.bat
+/*.ps1
+!/tests/ApiSmokeTest.ps1
+*.bak
+*.orig
+
+# ---------------------------------------------------------------------------
+# Buatan IDE / editor
+# ---------------------------------------------------------------------------
+/.idea
+/.vscode
+/.nova
+/.zed
+/.codex
+/.cursor
+/.fleet
+*.swp
+*.swo
+_ide_helper.php
+_ide_helper_models.php
+.phpactor.json
+Homestead.json
+Homestead.yaml
+php_errors.log
+
+# ---------------------------------------------------------------------------
+# Sistem operasi
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+*.lnk
+
+# ---------------------------------------------------------------------------
+# Dokumentasi / berkas kerja (tidak di-commit)
+# ---------------------------------------------------------------------------
+# CATATAN: folder docs/ berisi acuan skema (Rancangan Database MPTI.pdf)
+# serta kontrak API. Bila di-ignore, clone baru tidak memiliki acuan tersebut.
+# Hapus baris di bawah bila dokumentasi perlu ikut ter-commit.
+/docs/
+
+/AGENTS.md
+/CLAUDE.md
+/GEMINI.md
+/AGENTS.local.md
+*.local.md
+
+# Sumber data mentah (katalog sudah tersedia sebagai CSV di database/data/)
+/Daftar_Produk_DobrakMandiri.xlsx

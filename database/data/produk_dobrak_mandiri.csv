@@ -1,0 +1,105 @@
+no,kategori,nama_barang,harga
+1,Semen,Semen,65000
+2,Pasir,Pasir,175000
+3,"Batu dan agregat","Batu bata",650
+4,"Batu dan agregat",Kerikil,275000
+5,"Tangki dan drum","Tangki 500",800000
+6,"Tangki dan drum","Tangki 1000",1200000
+7,"Tangki dan drum","Tangki 2000",3100000
+8,"Tangki dan drum","Tangki petak",1500000
+9,"Tangki dan drum","Drum PVC",350000
+10,"Batu dan agregat",Batako,3000
+11,"Triplek dan papan","Triplek 3 mm",60000
+12,"Triplek dan papan","Triplek 4 mm",70000
+13,"Triplek dan papan","Triplek 6 mm",80000
+14,"Triplek dan papan","Triplek 9 mm",110000
+15,"Triplek dan papan","Triplek 12 mm",165000
+16,"Triplek dan papan","Triplek 15 mm",275000
+17,"Besi dan baja","Besi 4 mm",6000
+18,"Besi dan baja","Besi 5 mm",15000
+19,"Besi dan baja","Besi 6 mm",27000
+20,"Besi dan baja","Besi 8 mm",48000
+21,"Besi dan baja","Besi 10 mm",73000
+22,"Besi dan baja","Besi 12 mm",102000
+23,"Besi dan baja","Besi 14 mm",135000
+24,GRC,"GRC 4 mm",75000
+25,GRC,"GRC 6 mm",135000
+26,Pipa,"Pipa Rucika 1/2 inci",50000
+27,Pipa,"Pipa Rucika 3/4 inci",60000
+28,Pipa,"Pipa Rucika 1 inci",70000
+29,Pipa,"Pipa Rucika 1 1/4 inci",85000
+30,Pipa,"Pipa Rucika 1 1/2 inci",100000
+31,Pipa,"Pipa Rucika 2 inci",120000
+32,Pipa,"Pipa Rucika 2 1/2 inci",165000
+33,Pipa,"Pipa Rucika 3 inci",195000
+34,Pipa,"Pipa Rucika 4 inci",320000
+35,Pipa,"Pipa Waylon 3/4 inci",45000
+36,Pipa,"Pipa Waylon 3 inci",190000
+37,Pipa,"Pipa Dulon 1/2 inci",20000
+38,Pipa,"Pipa Dulon 3/4 inci",25000
+39,Pipa,"Pipa Dulon 1 inci",45000
+40,Pipa,"Pipa Dulon 1 1/4 inci",50000
+41,Pipa,"Pipa Dulon 1 1/2 inci",60000
+42,Pipa,"Pipa Dulon 2 inci",70000
+43,Pipa,"Pipa Dulon 2 1/2 inci",75000
+44,Pipa,"Pipa Dulon 3 inci",85000
+45,Pipa,"Pipa Dulon 4 inci",110000
+46,Lain-lain,Permeka,100000
+47,"Keramik dan granit","Keramik 25 x 25 cm",75000
+48,"Keramik dan granit","Keramik 25 x 40 cm",85000
+49,"Keramik dan granit","Keramik 40 x 40 cm",68000
+50,"Keramik dan granit","Keramik 50 x 50 cm",85000
+51,"Keramik dan granit","Granit 60 x 60 cm",165000
+52,Kayu,"Kayu 1 x 2",25000
+53,Kayu,"Kayu 1,5 x 2",40000
+54,Kayu,"Kayu 2 x 2",50000
+55,Kayu,"Kayu 1,5 x 3",75000
+56,Kayu,"Kayu 2 x 3",85000
+57,Kayu,"Kayu 2 x 4",100000
+58,Kayu,Papan,75000
+59,"Batu dan agregat","Batu split",650000
+60,"Batu dan agregat","Batu padas",350000
+61,"Batu dan agregat","Batu petrun",325000
+62,Sanitasi,"Kloset jongkok biasa",165000
+63,Sanitasi,"Kloset jongkok Triliun",250000
+64,Sanitasi,"Kloset duduk manual",575000
+65,Sanitasi,"Kloset duduk Triliun",1200000
+66,Sanitasi,"Kloset duduk American",2250000
+67,"Pintu dan kusen","Pintu PVC",275000
+68,"Pintu dan kusen","Pintu kayu",450000
+69,"Pintu dan kusen","Pintu aluminium",750000
+70,"Pintu dan kusen","Pintu UPVC",1250000
+71,"Pintu dan kusen",Kosen,200000
+72,Peralatan,"Angkong pave",450000
+73,Peralatan,"Angkong Beco asli",625000
+74,Peralatan,"Angkong jumbo",885000
+75,Peralatan,"Angkong PVC",650000
+76,"Atap dan baja ringan","Seng 6 kaki",65000
+77,"Atap dan baja ringan","Seng 7 kaki",75000
+78,"Atap dan baja ringan","Seng 8 kaki",85000
+79,"Atap dan baja ringan","Seng PVC",110000
+80,"Atap dan baja ringan","Seng plat",125000
+81,"Besi dan baja","Besi hollow 30 x 30",65000
+82,"Besi dan baja","Besi hollow 40 x 40",115000
+83,"Besi dan baja","Besi hollow 20 x 40",85000
+84,"Besi dan baja","Besi hollow 30 x 60",125000
+85,"Besi dan baja","Besi plat 1,6 mm",575000
+86,"Besi dan baja","Besi plat 2 mm",650000
+87,"Besi dan baja","Wiremesh 6",485000
+88,"Besi dan baja","Wiremesh 8",785000
+89,"Atap dan baja ringan","Seng warna 6 kaki",70000
+90,"Atap dan baja ringan","Seng warna 7 kaki",80000
+91,"Atap dan baja ringan","Seng warna 8 kaki",90000
+92,"Batu dan agregat","Batu angin",18000
+93,"Atap dan baja ringan","Canal Kokara",110000
+94,"Atap dan baja ringan","Canal Taso",128000
+95,"Atap dan baja ringan",Ring,58000
+96,"Atap dan baja ringan","Seng deck 0,25",55000
+97,"Atap dan baja ringan","Seng deck 0,30",65000
+98,"Atap dan baja ringan","Seng deck 0,35",75000
+99,"Atap dan baja ringan","Seng deck 0,40",85000
+100,"Cat dan pelarut","Cat Maxin minyak",85000
+101,"Cat dan pelarut","Cat Maxin air 5 kg",160000
+102,"Cat dan pelarut","Cat Maxin 20 kg",750000
+103,"Cat dan pelarut","Tiner 1 liter",38000
+104,"Cat dan pelarut","Tiner 5 liter",185000
