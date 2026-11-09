@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['kode_sku', 'nama_produk', 'harga', 'kuantitas'])]
+#[Fillable(['kode_sku', 'nama_produk', 'id_kategori', 'harga', 'kuantitas'])]
 class Stok extends Model
 {
     use HasFactory;
@@ -23,9 +24,18 @@ class Stok extends Model
     protected function casts(): array
     {
         return [
+            'id_kategori' => 'integer',
             'harga' => 'integer',
             'kuantitas' => 'integer',
         ];
+    }
+
+    /**
+     * @return BelongsTo<Kategori, $this>
+     */
+    public function kategori(): BelongsTo
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 
     /**
@@ -34,6 +44,18 @@ class Stok extends Model
     public function detailTransaksi(): HasMany
     {
         return $this->hasMany(DetailTransaksi::class, 'id_produk', 'id_produk');
+    }
+
+    /**
+     * @param  Builder<Stok>  $query
+     */
+    public function scopeByKategori(Builder $query, ?int $idKategori): void
+    {
+        if ($idKategori === null) {
+            return;
+        }
+
+        $query->where('id_kategori', $idKategori);
     }
 
     /**

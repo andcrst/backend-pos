@@ -41,6 +41,8 @@ bangunan. Sistem menangani **transaksi penjualan di kasir**, **manajemen stok te
 
 Skema database mengikuti dokumen rancangan resmi proyek (`docs/Rancangan Database MPTI.pdf`)
 yang terdiri dari **4 tabel**: `pengguna`, `stok`, `transaksi`, dan `detail_transaksi`.
+Satu tabel tambahan — **`kategori`** — ditambahkan atas persetujuan pemilik proyek untuk
+mengelompokkan produk sesuai katalog resmi.
 
 ---
 
@@ -51,7 +53,8 @@ yang terdiri dari **4 tabel**: `pengguna`, `stok`, `transaksi`, dan `detail_tran
 | Autentikasi token | ✅ | Laravel Sanctum, token per device |
 | Manajemen pengguna & role | ✅ | Role ENUM: `KASIR`, `GUDANG`, `MANAGER` |
 | Otorisasi berbasis permission | ✅ | spatie/laravel-permission di server |
-| CRUD stok | ✅ | SKU otomatis, pencarian, filter ketersediaan |
+| CRUD stok | ✅ | SKU otomatis, pencarian, filter ketersediaan & kategori |
+| Kategori produk | ✅ | 16 kategori dari katalog, CRUD penuh + filter produk |
 | Scan produk by SKU | ✅ | Endpoint khusus untuk input kasir |
 | Transaksi kasir (checkout) | ✅ | Multi-item, atomik, rollback saat gagal |
 | Pengurangan stok otomatis | ✅ | Dalam satu DB transaction + `lockForUpdate` |
@@ -93,6 +96,14 @@ Mengikuti `docs/Rancangan Database MPTI.pdf` — **wajib**, tidak boleh menambah
 | `password` | VARCHAR(255) | | Hash |
 | `role` | ENUM | | `KASIR` / `GUDANG` / `MANAGER` |
 
+### `kategori`
+
+| Kolom | Tipe | Key | Keterangan |
+|---|---|---|---|
+| `id_kategori` | BIGINT | PK | Auto Increment |
+| `nama_kategori` | VARCHAR(100) | UNIQUE | Contoh: `Besi dan baja` |
+| `created_at` / `updated_at` | TIMESTAMP | | |
+
 ### `stok`
 
 | Kolom | Tipe | Key | Keterangan |
@@ -100,6 +111,7 @@ Mengikuti `docs/Rancangan Database MPTI.pdf` — **wajib**, tidak boleh menambah
 | `id_produk` | BIGINT | PK | Auto Increment |
 | `kode_sku` | VARCHAR(50) | UNIQUE | Kode unik produk |
 | `nama_produk` | VARCHAR(150) | | Nama produk |
+| `id_kategori` | BIGINT | FK → `kategori` | Nullable, `ON DELETE SET NULL` |
 | `harga` | INT | | Harga satuan (rupiah) |
 | `kuantitas` | INT | | Saldo stok |
 
@@ -216,12 +228,17 @@ API tersedia di **`http://localhost:8000/api/v1`**
 | `POST` | `/auth/logout` | auth | Cabut token aktif |
 | `GET` | `/auth/me` | auth | Profil + role + permission |
 | `PATCH` | `/auth/password` | auth | Ganti password |
-| `GET` | `/stok` | `stok.view` | Daftar stok |
+| `GET` | `/stok` | `stok.view` | Daftar stok (+`?id_kategori=`) |
 | `POST` | `/stok` | `stok.create` | Tambah produk |
 | `GET` | `/stok/scan` | `stok.view` | Cari produk via SKU |
 | `GET` | `/stok/{id_produk}` | `stok.view` | Detail produk |
 | `PUT` | `/stok/{id_produk}` | `stok.update` | Ubah produk |
 | `DELETE` | `/stok/{id_produk}` | `stok.delete` | Hapus produk |
+| `GET` | `/kategori` | `kategori.view` | Daftar kategori + jumlah produk |
+| `POST` | `/kategori` | `kategori.create` | Tambah kategori |
+| `GET` | `/kategori/{id_kategori}` | `kategori.view` | Detail kategori |
+| `PUT` | `/kategori/{id_kategori}` | `kategori.update` | Ubah kategori |
+| `DELETE` | `/kategori/{id_kategori}` | `kategori.delete` | Hapus kategori |
 | `GET` | `/transaksi` | `transaksi.view` | Daftar transaksi |
 | `POST` | `/transaksi` | `transaksi.create` | Checkout |
 | `GET` | `/transaksi/{id}` | `transaksi.view` | Detail transaksi |
@@ -324,6 +341,7 @@ curl -X POST http://localhost:8000/api/v1/transaksi \
 | `403` | `ACCOUNT_INACTIVE` | Akun dinonaktifkan |
 | `404` | `NOT_FOUND` | Data tidak ditemukan |
 | `409` | `RESOURCE_IN_USE` | Data masih dipakai record lain |
+| `409` | `KATEGORI_MASIH_DIPAKAI` | Kategori masih punya produk |
 | `422` | `VALIDATION_ERROR` | Validasi field gagal |
 | `422` | `INVALID_CREDENTIALS` | Email/password salah |
 | `422` | `STOK_TIDAK_CUKUP` | Kuantitas stok tidak cukup |
@@ -338,6 +356,8 @@ curl -X POST http://localhost:8000/api/v1/transaksi \
 
 | Permission | MANAGER | KASIR | GUDANG |
 |---|:---:|:---:|:---:|
+| `kategori.view` | ✅ | ✅ | ✅ |
+| `kategori.create` / `update` / `delete` | ✅ | — | ✅ |
 | `stok.view` | ✅ | ✅ | ✅ |
 | `stok.create` / `update` / `delete` | ✅ | — | ✅ |
 | `transaksi.view` | ✅ | ✅ | — |
@@ -371,7 +391,7 @@ php artisan test
 ```
 
 ```
-Tests:    35 passed (148 assertions)
+Tests:    54 passed (197 assertions)
 ```
 
 Cakupan: autentikasi, otorisasi per role, CRUD stok, checkout + pengurangan stok, rollback stok

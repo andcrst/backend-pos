@@ -2,10 +2,64 @@
 
 namespace Tests\Feature;
 
+use App\Models\Kategori;
 use App\Models\Stok;
 
 class StokTest extends PosTestCase
 {
+    public function test_stok_menyertakan_kategori(): void
+    {
+        $this->actingAsRole('GUDANG');
+        $pipa = Kategori::create(['nama_kategori' => 'Pipa']);
+
+        Stok::create(['kode_sku' => 'PIPA-1', 'nama_produk' => 'Pipa Rucika 1 inci', 'id_kategori' => $pipa->id_kategori, 'harga' => 70000, 'kuantitas' => 3]);
+
+        $this->getJson('/api/v1/stok')
+            ->assertOk()
+            ->assertJsonPath('data.0.id_kategori', $pipa->id_kategori)
+            ->assertJsonPath('data.0.kategori.nama_kategori', 'Pipa');
+    }
+
+    public function test_produk_tanpa_kategori_tetap_boleh_dibuat(): void
+    {
+        $this->actingAsRole('GUDANG');
+
+        $this->postJson('/api/v1/stok', [
+            'nama_produk' => 'Produk Bebas',
+            'harga' => 10000,
+            'kuantitas' => 1,
+        ])->assertCreated()
+            ->assertJsonPath('data.id_kategori', null)
+            ->assertJsonPath('data.kategori', null);
+    }
+
+    public function test_filter_stok_berdasarkan_kategori(): void
+    {
+        $this->actingAsRole('GUDANG');
+        $pipa = Kategori::create(['nama_kategori' => 'Pipa']);
+        $kayu = Kategori::create(['nama_kategori' => 'Kayu']);
+
+        Stok::create(['kode_sku' => 'PIPA-1', 'nama_produk' => 'Pipa', 'id_kategori' => $pipa->id_kategori, 'harga' => 70000, 'kuantitas' => 3]);
+        Stok::create(['kode_sku' => 'KAYU-1', 'nama_produk' => 'Kayu', 'id_kategori' => $kayu->id_kategori, 'harga' => 25000, 'kuantitas' => 3]);
+
+        $this->getJson("/api/v1/stok?id_kategori={$pipa->id_kategori}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.nama_produk', 'Pipa');
+    }
+
+    public function test_id_kategori_tidak_dikenal_ditolak(): void
+    {
+        $this->actingAsRole('GUDANG');
+
+        $this->postJson('/api/v1/stok', [
+            'nama_produk' => 'Produk X',
+            'id_kategori' => 999999,
+            'harga' => 1000,
+        ])->assertStatus(422)
+            ->assertJsonPath('errors.id_kategori.0', 'Kategori tidak ditemukan.');
+    }
+
     public function test_it_lists_stok_with_pagination(): void
     {
         $this->actingAsRole('KASIR');

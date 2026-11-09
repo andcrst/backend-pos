@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kategori;
 use App\Models\Stok;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +41,7 @@ class ProductCatalogSeeder extends Seeder
 
                 $nama = trim((string) $row[2]);
                 $harga = (int) $row[3];
+                $kategori = trim((string) $row[1]);
 
                 if ($nama === '') {
                     continue;
@@ -49,6 +51,7 @@ class ProductCatalogSeeder extends Seeder
                     ['nama_produk' => $nama],
                     [
                         'kode_sku' => $this->uniqueSku($nama),
+                        'id_kategori' => $this->idKategori($kategori),
                         'harga' => $harga,
                         'kuantitas' => self::INITIAL_QTY,
                     ],
@@ -72,5 +75,17 @@ class ProductCatalogSeeder extends Seeder
         }
 
         return $candidate;
+    }
+
+    /**
+     * Id kategori berdasarkan nama; dibuat bila belum ada.
+     */
+    private function idKategori(string $nama): ?int
+    {
+        if ($nama === '') {
+            return null;
+        }
+
+        return Kategori::query()->firstOrCreate(['nama_kategori' => $nama])->id_kategori;
     }
 }

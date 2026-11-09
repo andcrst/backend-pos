@@ -19,6 +19,7 @@ class RolePermissionSeeder extends Seeder
      */
     private array $permissions = [
         'user' => ['view', 'create', 'update', 'delete'],
+        'kategori' => ['view', 'create', 'update', 'delete'],
         'stok' => ['view', 'create', 'update', 'delete'],
         'transaksi' => ['view', 'create', 'void'],
         'report' => ['view'],
@@ -32,10 +33,12 @@ class RolePermissionSeeder extends Seeder
     private array $roles = [
         'manager' => '*',
         'cashier' => [
+            'kategori.view',
             'stok.view',
             'transaksi.view', 'transaksi.create',
         ],
         'warehouse' => [
+            'kategori.view', 'kategori.create', 'kategori.update', 'kategori.delete',
             'stok.view', 'stok.create', 'stok.update', 'stok.delete',
             'report.view',
         ],

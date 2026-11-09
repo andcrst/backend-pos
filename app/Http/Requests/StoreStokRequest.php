@@ -28,6 +28,11 @@ class StoreStokRequest extends FormRequest
                 Rule::unique('stok', 'kode_sku')->ignore($stok?->id_produk, 'id_produk'),
             ],
             'nama_produk' => [Rule::requiredIf(! $isUpdate), 'string', 'max:150'],
+            'id_kategori' => [
+                'nullable',
+                'integer',
+                Rule::exists('kategori', 'id_kategori'),
+            ],
             'harga' => [Rule::requiredIf(! $isUpdate), 'integer', 'min:0'],
             'kuantitas' => ['sometimes', 'integer', 'min:0'],
         ];
@@ -48,6 +53,8 @@ class StoreStokRequest extends FormRequest
             'kuantitas.integer' => 'Kuantitas harus berupa angka bulat.',
             'kode_sku.max' => 'Kode SKU maksimal 50 karakter.',
             'nama_produk.max' => 'Nama produk maksimal 150 karakter.',
+            'id_kategori.integer' => 'Kategori tidak valid.',
+            'id_kategori.exists' => 'Kategori tidak ditemukan.',
         ];
     }
 }

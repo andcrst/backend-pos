@@ -1,10 +1,22 @@
 <?php
 
+use App\Http\Controllers\Api\V1\KategoriController;
 use App\Http\Controllers\Api\V1\StokController;
 use App\Http\Controllers\Api\V1\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
+    Route::get('kategori', [KategoriController::class, 'index'])
+        ->middleware('permission:kategori.view')->name('api.v1.kategori.index');
+    Route::post('kategori', [KategoriController::class, 'store'])
+        ->middleware('permission:kategori.create')->name('api.v1.kategori.store');
+    Route::get('kategori/{kategori}', [KategoriController::class, 'show'])
+        ->middleware('permission:kategori.view')->name('api.v1.kategori.show');
+    Route::put('kategori/{kategori}', [KategoriController::class, 'update'])
+        ->middleware('permission:kategori.update')->name('api.v1.kategori.update');
+    Route::delete('kategori/{kategori}', [KategoriController::class, 'destroy'])
+        ->middleware('permission:kategori.delete')->name('api.v1.kategori.destroy');
+
     Route::get('stok', [StokController::class, 'index'])
         ->middleware('permission:stok.view')->name('api.v1.stok.index');
     Route::post('stok', [StokController::class, 'store'])

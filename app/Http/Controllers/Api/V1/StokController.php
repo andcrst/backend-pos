@@ -20,7 +20,9 @@ class StokController extends Controller
         $perPage = min((int) $request->query('per_page', 20), 100);
 
         $stok = Stok::query()
+            ->with('kategori:id_kategori,nama_kategori')
             ->search($request->query('search'))
+            ->byKategori($request->filled('id_kategori') ? (int) $request->query('id_kategori') : null)
             ->when($request->boolean('tersedia'), fn ($query) => $query->withStock())
             ->orderBy('nama_produk')
             ->paginate($perPage)
@@ -35,21 +37,26 @@ class StokController extends Controller
         $data['kode_sku'] = $data['kode_sku'] ?? $this->nomor->generateSku($data['nama_produk']);
         $data['kuantitas'] = $data['kuantitas'] ?? 0;
 
-        $stok = Stok::create($data);
+        $stok = Stok::create($data)->load('kategori:id_kategori,nama_kategori');
 
         return ApiResponse::success(new StokResource($stok), 'Produk stok berhasil dibuat.', 201);
     }
 
     public function show(Stok $stok): JsonResponse
     {
-        return ApiResponse::success(new StokResource($stok));
+        return ApiResponse::success(
+            new StokResource($stok->load('kategori:id_kategori,nama_kategori')),
+        );
     }
 
     public function update(StoreStokRequest $request, Stok $stok): JsonResponse
     {
         $stok->fill($request->validated())->save();
 
-        return ApiResponse::success(new StokResource($stok->refresh()), 'Stok berhasil diperbarui.');
+        return ApiResponse::success(
+            new StokResource($stok->refresh()->load('kategori:id_kategori,nama_kategori')),
+            'Stok berhasil diperbarui.',
+        );
     }
 
     public function destroy(Stok $stok): JsonResponse
@@ -77,7 +84,10 @@ class StokController extends Controller
             ]);
         }
 
-        $stok = Stok::query()->where('kode_sku', $kode)->first();
+        $stok = Stok::query()
+            ->with('kategori:id_kategori,nama_kategori')
+            ->where('kode_sku', $kode)
+            ->first();
 
         if ($stok === null) {
             return ApiResponse::error('Produk tidak ditemukan.', 'NOT_FOUND', 404);
